@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    <title>เข้าสู่ระบบ</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+        body {
+            font-family: 'Sarabun', sans-serif
+        }
+        
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <main class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 transform transition-all hover:scale-105 duration-300">
+        <h2 class="text-3xl font-extrabold text-center mb-6 text-teal-600">เข้าสู่ระบบ</h2>
+
+        <% if (typeof error !== 'undefined') { %>
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-lg">
+                <%= error %>
+            </div>
+        <% } %>
+
+        <form id="loginForm" method="post">
+            <div class="mb-5">
+                <label for="username" class="block text-sm font-medium text-gray-700">ชื่อผู้ใช้:</label>
+                <input type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้"
+                    class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" required>
+            </div>
+
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700">รหัสผ่าน:</label>
+                <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน"
+                    class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" required>
+            </div>
+
+            <button type="submit"
+                class="w-full py-3 bg-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 transform transition-all hover:scale-105 duration-300">
+                เข้าสู่ระบบ
+            </button>
+        </form>
+
+    </main>
+
+</body>
+
+<script>
+    const form = document.getElementById('loginForm');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+        const username = form.username.value;
+        const password = form.password.value;
+        console.log(username);
+       
+        const response = await fetch('/login',{
+            method:"post",
+            headers:{
+                'Content-type':'application/json'
+            },
+            body:JSON.stringify({username,password})
+        })
+
+        const result = await response.json();
+        console.log(result);
+        if(result.mes != 'ok')return Swal.fire({
+            title:'เกิดข้อผิดพลาด',
+            text:result.mes,
+            icon:"error",
+            confirmButtonText:"ตกลง"
+        })
+        localStorage.setItem('users',JSON.stringify(result.user));
+        await Swal.fire({
+            title:'สำเร็จ',
+            text:'เข้าสู่ระบบแล้ว',
+            icon:"success",
+            confirmButtonText:"ตกลง"
+        })
+
+    location.href = result.redirect;
+});
+
+</script>
+
+</html>

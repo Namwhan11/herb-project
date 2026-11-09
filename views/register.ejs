@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    <title>ลงทะเบียนสมาชิก</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .bg-custom {
+            background-color: #38b2ac;
+        }
+
+        .btn {
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #2a7f77;
+        }
+
+        .form-container:hover {
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-custom min-h-screen flex items-center justify-center">
+
+    <main class="flex-grow flex justify-center items-center">
+        <div class="w-full max-w-md bg-white rounded-xl shadow-xl p-8 form-container">
+            <h2 class="text-3xl font-extrabold text-center mb-6 text-teal-600">ลงทะเบียนสมาชิก</h2>
+
+            <% if (typeof error !== 'undefined') { %>
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-lg">
+                    <%= error %>
+                </div>
+            <% } %>
+
+            <form action="/register" method="post">
+                <div class="mb-5">
+                    <label for="username" class="block text-sm font-medium text-teal-600">ชื่อผู้ใช้ :</label>
+                    <input type="text" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="username" name="username" placeholder="กรอกชื่อผู้ใช้" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="password" class="block text-sm font-medium text-teal-600">รหัสผ่าน :</label>
+                    <input type="password" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="password" name="password" placeholder="กรอกรหัสผ่าน" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="fname" class="block text-sm font-medium text-teal-600">ชื่อ :</label>
+                    <input type="text" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="fname" name="fname" placeholder="กรอกชื่อ" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="lname" class="block text-sm font-medium text-teal-600">นามสกุล :</label>
+                    <input type="text" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="lname" name="lname" placeholder="กรอกนามสกุล" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="email" class="block text-sm font-medium text-teal-600">อีเมล์ :</label>
+                    <input type="email" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="email" name="email" placeholder="กรอกอีเมล์" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="phone" class="block text-sm font-medium text-teal-600">เบอร์โทรศัพท์ :</label>
+                    <input type="tel" pattern="[0-9]{10}" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="phone" name="phone" placeholder="กรอกเบอร์โทรศัพท์" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="province" class="block text-sm font-medium text-teal-600">จังหวัด :</label>
+                    <input type="text" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="province" name="province" placeholder="กรอกจังหวัด" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="amphure" class="block text-sm font-medium text-teal-600">อำเภอ :</label>
+                    <input type="text" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="amphure" name="amphure" placeholder="กรอกอำเภอ" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="sub_dis" class="block text-sm font-medium text-teal-600">ตำบล :</label>
+                    <input type="text" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="sub_dis" name="sub_dis" placeholder="กรอกตำบล" required>
+                </div>
+
+                <div class="mb-5">
+                    <label for="zip_code" class="block text-sm font-medium text-teal-600">รหัสไปรษณีย์ :</label>
+                    <input type="text" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" id="zip_code" name="zip_code" placeholder="กรอกรหัสไปรษณีย์" required>
+                </div>
+
+                <div class="mb-5">  
+                    <label for="role" class="block text-sm font-medium text-teal-600">บทบาท :</label>
+                    <select id="role" name="role" class="mt-2 p-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:outline-none text-black" required>
+                        <option value="" disabled selected>เลือกบทบาท</option>
+                        <option value="นักวิจัย">นักวิจัย</option>
+                        <option value="แพทย์">แพทย์</option>
+                        <option value="สมาชิก">สมาชิก</option>
+                        <option value="แอดมิน">แอดมิน</option>
+                    </select>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="w-full py-3 bg-teal-500 text-white font-semibold rounded-lg shadow-lg transform transition duration-300 ease-in-out hover:scale-105 mb-3">
+                        ลงทะเบียน
+                    </button>
+                    <button type="reset" class="w-full py-3 bg-gray-500 text-white font-semibold rounded-lg shadow-lg transform transition duration-300 ease-in-out hover:scale-105 mb-3">
+                        <a href="/login" class="block w-full text-center">ยกเลิก</a>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</body>
+
+</html>

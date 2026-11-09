@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="path/to/your/tailwind.css"> <!-- ปรับเส้นทางให้ถูกต้อง -->
+    <title>Your Title</title>
+</head>
+<body>
+
+<% if (user && user.role !== 'Guest') { %>
+    <div id="content" class="bg-teal-100 text-teal-800 p-4 rounded-lg shadow-md text-center mb-4 relative">
+        <p class="text-lg font-semibold">ยินดีต้อนรับ! <%= user.fname %> <%= user.lname %> (<%= user.role %>)</p>
+        <button id="close-welcome" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+<% } %>
+<script>
+    // ตรวจสอบสถานะการปิดข้อความต้อนรับจาก sessionStorage
+    if (sessionStorage.getItem('welcomeClosed') !== 'true') {
+        document.getElementById('content').style.display = 'block'; // แสดงข้อความต้อนรับ
+    } else {
+        document.getElementById('content').style.display = 'none'; // ซ่อนข้อความต้อนรับ
+    }
+
+    // เพิ่ม Event Listener สำหรับปุ่มปิด
+    document.getElementById('close-welcome')?.addEventListener('click', function() {
+        document.getElementById('content').style.display = 'none';
+        // บันทึกสถานะการปิดข้อความต้อนรับใน sessionStorage
+        sessionStorage.setItem('welcomeClosed', 'true');
+    });
+
+    // เมื่อผู้ใช้ล็อกอินใหม่ ให้ล้างสถานะการปิดข้อความต้อนรับ
+    function clearWelcomeClosedState() {
+        sessionStorage.removeItem('welcomeClosed');
+    }
+
+    // เรียกฟังก์ชันนี้เมื่อผู้ใช้ล็อกอินสำเร็จ
+    // ตัวอย่าง: เรียกฟังก์ชันนี้ในส่วนของการล็อกอิน
+    clearWelcomeClosedState();
+</script>
+
+<body>
+    <html>

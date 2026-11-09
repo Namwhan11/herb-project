@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>รายงานสมุนไพร</title>
+
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        table {
+            white-space: nowrap;
+            table-layout: auto;
+        }
+
+        th,
+        td {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+
+            th,
+            td {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+
+        table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+th, td {
+    word-wrap: break-word;
+    white-space: normal; /* อนุญาตให้ขึ้นบรรทัดใหม่ */
+    overflow-wrap: break-word; /* รองรับการตัดคำ */
+}
+
+
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <%- include('header') %>
+
+    <main class="container mx-auto px-4 py-10">
+        <h1 class="text-3xl font-semibold text-center mb-8 text-teal-600">รายงานสมุนไพรไทยแยกตามหมวดหมู่</h1>
+
+        <!-- ฟอร์มเลือกหมวดหมู่ -->
+        <form method="GET" action="/generate-report" class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-6">
+                <label for="category" class="block text-lg font-semibold text-gray-700 mb-2">เลือกหมวดหมู่สมุนไพร:</label>
+                <select name="category" id="category" class="p-3 border border-teal-300 rounded-lg w-full">
+                    <option value="all">ทั้งหมด</option>
+                    <option value="บำรุงร่างกายและเสริมสร้างสุขภาพ">บำรุงร่างกายและเสริมสร้างสุขภาพ</option>
+                    <option value="ช่วยย่อยอาหารและบำรุงระบบทางเดินอาหาร">ช่วยย่อยอาหารและบำรุงระบบทางเดินอาหาร</option>
+                    <option value="ลดความดันโลหิต">ลดความดันโลหิต</option>
+                    <option value="ลดความเครียดและบำรุงระบบประสาท">ลดความเครียดและบำรุงระบบประสาท</option>
+                    <option value="บำรุงผิวพรรณและต้านอนุมูลอิสระ">บำรุงผิวพรรณและต้านอนุมูลอิสระ</option>
+                    <option value="ลดน้ำตาลในเลือด">ลดน้ำตาลในเลือด</option>
+                    <option value="บรรเทาอาการไอและเสมหะ">บรรเทาอาการไอและเสมหะ</option>
+                    <option value="ลดไข้และต้านการอักเสบ">ลดไข้และต้านการอักเสบ</option>
+                    <option value="ช่วยบำรุงผมและบรรเทาปัญหาทางผิวหนัง">ช่วยบำรุงผมและบรรเทาปัญหาทางผิวหนัง</option>
+                </select>
+            </div>
+
+            <div class="mb-6">
+                <label for="subcategory" class="block text-lg font-semibold text-gray-700 mb-2">เลือกหมวดหมู่ย่อย:</label>
+                <select name="subcategory" id="subcategory" class="p-3 border border-teal-300 rounded-lg w-full">
+                    <option value="all">ทั้งหมด</option>
+                </select>
+            </div>
+
+            <button type="submit"
+                class="px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 hover:scale-105 transition-all duration-300">
+                สร้างรายงาน
+            </button>
+        </form>
+
+        <!-- ปุ่มดาวน์โหลด PDF -->
+        <% if (reports && reports.length > 0) { %>
+            <div class="text-center mt-6">
+                <% if (user) { %>
+                    <button onclick="downloadPDF('<%= category %>', '<%= subcategory %>')"
+                        class="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-teal-600 hover:scale-105 transition-all duration-300">
+                        ดาวน์โหลดรายงานเป็น PDF
+                    </button>
+                <% } else { %>
+                    <p class="text-red-500">กรุณาเข้าสู่ระบบเพื่อดาวน์โหลดรายงาน</p>
+                <% } %>
+            </div>
+        <% } %>
+
+        <!-- แสดงรายงาน -->
+        <% if (reports && reports.length> 0) { %>
+            <div class="mt-8 overflow-x-auto bg-white rounded-lg shadow-lg">
+                <table class="w-full table-fixed border-collapse border border-gray-300">
+                    <thead class="bg-teal-600 text-white">
+                        <tr>
+                            <th class="py-3 px-2 w-1/7 border border-gray-300">ชื่อสมุนไพร</th>
+                            <th class="py-3 px-2 w-1/7 border border-gray-300">ชื่อภาษาอังกฤษ</th>
+                            <th class="py-3 px-2 w-1/7 border border-gray-300">ชื่อวิทยาศาสตร์</th>
+                            <th class="py-3 px-2 w-1/7 border border-gray-300">วงค์ตระกูลพืช</th>
+                            <th class="py-3 px-2 w-1/7 border border-gray-300">สรรพคุณทางการแพทย์</th>
+                            <th class="py-3 px-2 w-1/7 border border-gray-300">ผลข้างเคียง</th>
+                            <th class="py-3 px-2 w-1/7 border border-gray-300">วิธีการใช้</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <% reports.forEach(function(herbs) { %>
+                            <tr class="border-t border-gray-200 hover:bg-gray-50 transition-all duration-200">
+                                <td class="py-3 px-2 border border-gray-300 break-words"><%= herbs.name_th %></td>
+                                <td class="py-3 px-2 border border-gray-300 break-words"><%= herbs.name_en %></td>
+                                <td class="py-3 px-2 border border-gray-300 break-words"><%= herbs.scientific_name %></td>
+                                <td class="py-3 px-2 border border-gray-300 break-words"><%= herbs.family %></td>
+                                <td class="py-3 px-2 border border-gray-300 break-words"><%= herbs.benefits %></td>
+                                <td class="py-3 px-2 border border-gray-300 break-words"><%= herbs.side_effects %></td>
+                                <td class="py-3 px-2 border border-gray-300 break-words"><%= herbs.usage_method %></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                
+                
+            </div>
+        <% } else { %>
+            <p class="mt-6 text-center text-gray-500">ไม่พบข้อมูลสมุนไพรในหมวดหมู่ที่เลือก</p>
+        <% } %>
+    </main>
+
+    <script>
+    function downloadPDF(category, subcategory) {
+    const user = JSON.parse(localStorage.getItem('users')); 
+    if (!user || !user.userid) {
+        alert('กรุณาเข้าสู่ระบบก่อนดาวน์โหลดรายงาน');
+        return;
+    }
+
+    const userid = user.userid; 
+    const url = `/download-pdf?category=${encodeURIComponent(category)}&subcategory=${encodeURIComponent(subcategory)}&userid=${userid}`;
+    window.location.href = url;
+}
+       
+
+        document.getElementById('category').addEventListener('change', async function () {
+            const category = this.value;
+            const subcategorySelect = document.getElementById('subcategory');
+
+            subcategorySelect.innerHTML = '<option value="all">ทั้งหมด</option>'; // รีเซ็ตค่าเริ่มต้น
+
+            if (category === 'all') return;
+
+            try {
+                const response = await fetch(`/get-subcategories?category=${category}`);
+                const subcategories = await response.json();
+
+                subcategories.forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub.subctgname;
+                    option.textContent = sub.subctgname;
+                    subcategorySelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading subcategories:', error);
+            }
+        });
+    </script>
+</body>
+
+</html>

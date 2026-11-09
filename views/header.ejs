@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    <title>ระบบจัดการสารสนเทศสมุนไพรไทย</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .header-shadow {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-login {
+            background-color: #38b2ac;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #2c7a7b;
+        }
+
+        .btn-primary {
+            background-color: #38b2ac;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #2c7a7b;
+        }
+
+        .btn-secondary {
+            background-color: #4a5568;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2d3748;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white header-shadow">
+        <div class="max-w-screen-xl mx-auto px-4 py-6 flex justify-between items-center">
+            <div class="flex items-center">
+                <span class="text-2xl font-bold text-gray-800">ระบบจัดการสารสนเทศสมุนไพรไทย</span>
+            </div>
+
+            <nav class="space-x-4 text-lg">
+                <a href="/home" class="hover:text-teal-500 text-gray-700">หน้าแรก</a>
+                <a href="/about" class="hover:text-teal-500 text-gray-700">เกี่ยวกับ</a>
+                <a href="/comment" class="hover:text-teal-500 text-gray-700">ความคิดเห็น</a>
+                <a href="/generate-report?category=all" class="hover:text-teal-500 text-gray-700">รายงาน</a>
+                <a href="/contact" class="hover:text-teal-500 text-gray-700">ติดต่อ</a>
+
+                <!-- ตรวจสอบสถานะการล็อกอิน -->
+                <% if (user) { %>
+                    <a href="/logout" class="btn-login">ออกจากระบบ</a>
+                    <% } else { %>
+                        <a href="/login" class="btn-login">เข้าสู่ระบบ</a>
+                        <% } %>
+            </nav>
+        </div>
+    </header>
+    <%- include('content') %>
+
+</body>
+
+</html>

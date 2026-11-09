@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>รายงานข้อมูลผู้ใช้</title>
+
+    <style>
+          @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap');
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        table {
+            white-space: nowrap;
+            table-layout: auto;
+        }
+
+        th,
+        td {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+
+            th,
+            td {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <%- include('adminHd1') %>
+
+    <main class="ml-64 pt-20 px-4 py-10">
+        <h1 class="text-3xl font-semibold text-center mb-8 text-teal-600 mt-12">รายงานข้อมูลผู้ใช้</h1>
+
+        <!-- ฟอร์มเลือกบทบาท -->
+        <form method="GET" action="/admin/userReports" class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div class="mb-6">
+                <label for="role" class="block text-lg font-semibold text-gray-700 mb-2">เลือกบทบาท:</label>
+                <select name="role" id="role"
+                    class="mt-2 p-3 border border-teal-300 rounded-lg w-full focus:ring-2 focus:ring-teal-500">
+                    <option value="all">ทั้งหมด</option>
+                    <option value="แอดมิน">แอดมิน</option>
+                    <option value="แพทย์">แพทย์</option>
+                    <option value="นักวิจัย">นักวิจัย</option>
+                    <option value="สมาชิก">สมาชิก</option>
+                </select>
+            </div>
+            <button type="submit"
+                class="px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 hover:scale-105 transition-all duration-300">
+                กรองข้อมูล
+            </button>
+        </form>
+
+        <!-- ปุ่มดาวน์โหลด PDF -->
+        <% if (users && users.length> 0) { %>
+            <div class="text-center mt-6">
+                <a href="/download-pdff?role=<%= roleFilter %>"
+                    class="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-teal-600 hover:scale-105 transition-all duration-300">
+                    ดาวน์โหลดรายงานเป็น PDF
+                </a>
+            </div>
+            <% } %>
+
+                <!-- แสดงรายงาน -->
+                <% if (users && users.length> 0) { %>
+                    <div class="mt-8 overflow-x-auto bg-white rounded-lg shadow-lg">
+                        <table class="min-w-full">
+                            <thead class="bg-teal-600 text-white">
+                                <tr>
+                                    <th class="py-3 px-6 text-left border border-gray-300">ชื่อ</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">นามสกุล</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">อีเมล์</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">เบอร์โทรศัพท์</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">จังหวัด</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">อำเภอ</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">ตำบล</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">รหัสไปรษณีย์</th>
+                                    <th class="py-3 px-6 text-left border border-gray-300">บทบาท</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700">
+                                <% users.forEach(user=> { %>
+                                    <tr class="border-t border-gray-200 hover:bg-gray-50 transition-all duration-200">
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.fname %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.lname %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.email %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.phone %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.province %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.amphure %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.sub_dis %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300">
+                                            <%= user.zip_code %>
+                                        </td>
+                                        <td class="py-3 px-6 border border-gray-300 font-semibold text-teal-700">
+                                            <%= user.role %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                        <p class="mt-6 text-center text-gray-500">ไม่พบข้อมูลผู้ใช้ในบทบาทที่เลือก</p>
+                        <% } %>
+
+                            <script>
+                                async function downloadPDF(roleFilter) {
+                                    const user = JSON.parse(localStorage.getItem('users'));
+                                    if (!user || !user.userid) {
+                                        alert('กรุณาเข้าสู่ระบบก่อนดาวน์โหลดรายงาน');
+                                        return;
+                                    }
+
+                                    const response = await fetch(`/download-pdff?role=${roleFilter}&userid=${user.userid}`);
+                                    if (response.ok) {
+                                        const blob = await response.blob();
+                                        const url = window.URL.createObjectURL(blob);
+                                        const a = document.createElement('a');
+                                        a.href = url;
+                                        a.download = `รายงานข้อมูลผู้ใช้ - ${roleFilter}.pdf`;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        document.body.removeChild(a);
+                                    } else {
+                                        alert('ไม่สามารถดาวน์โหลดรายงานได้');
+                                    }
+                                }
+                            </script>
+    </main>
+</body>
+
+</html>

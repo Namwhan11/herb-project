@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบสารสนเทศสมุนไพรไทย</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <%- include("header", { user: user }) %>
+    
+    <div class="container mx-auto p-6">
+        
+        <!-- ฟอร์มค้นหา -->
+        <div class="mb-6">
+            <input type="text" placeholder="ค้นหาสมุนไพร..." class="w-full p-3 border rounded shadow">
+        </div>
+        
+        <!-- หมวดหมู่ -->
+        <div class="flex space-x-4 mb-6">
+            <a href="#" class="bg-teal-500 text-white px-4 py-2 rounded-lg shadow hover:bg-teal-600">สมุนไพรพื้นบ้าน</a>
+            <a href="#" class="bg-teal-500 text-white px-4 py-2 rounded-lg shadow hover:bg-teal-600">สมุนไพรบำรุงผิวพรรณ</a>
+            <a href="#" class="bg-teal-500 text-white px-4 py-2 rounded-lg shadow hover:bg-teal-600">สมุนไพรยอดนิยม</a>
+        </div>
+        
+        <!-- รายการสมุนไพร -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- สมุนไพร 1 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <img src="https://www.disthai.com/images/editor/%E0%B8%82%E0%B8%B4%E0%B8%87.jpg" alt="ขิง" class="w-full h-40 object-cover rounded-md">
+                <h2 class="text-xl font-bold mt-3">ขิง</h2>
+                <p class="text-gray-600 mt-2">ช่วยย่อยอาหารและลดอาการคลื่นไส้</p>
+                <a href="#" class="text-teal-500 mt-2 inline-block">อ่านเพิ่มเติม</a>
+            </div>
+            
+            <!-- สมุนไพร 2 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <img src="https://www.technologychaoban.com/wp-content/uploads/2018/02/%E0%B8%81%E0%B8%B0%E0%B9%80%E0%B8%9E%E0%B8%A3%E0%B8%B2-1024x669-1.jpg" alt="กระเพรา" class="w-full h-40 object-cover rounded-md">
+                <h2 class="text-xl font-bold mt-3">กระเพรา</h2>
+                <p class="text-gray-600 mt-2">ช่วยในการย่อยอาหารและต้านเชื้อแบคทีเรีย</p>
+                <a href="#" class="text-teal-500 mt-2 inline-block">อ่านเพิ่มเติม</a>
+            </div>
+
+            <!-- สมุนไพร 3 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <img src="https://veggiepedia.greenery.org/wp-content/uploads/2020/05/MG_0383-Selected.jpg" alt="โหระพา" class="w-full h-40 object-cover rounded-md">
+                <h2 class="text-xl font-bold mt-3">โหระพา</h2>
+                <p class="text-gray-600 mt-2">ช่วยบำรุงร่างกายและมีสรรพคุณในการต้านเชื้อโรค</p>
+                <a href="#" class="text-teal-500 mt-2 inline-block">อ่านเพิ่มเติม</a>
+            </div>
+
+            <!-- สมุนไพร 4 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <img src="https://medthai.com/wp-content/uploads/2013/12/%E0%B8%94%E0%B8%AD%E0%B8%81%E0%B8%9A%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%A5%E0%B8%A7%E0%B8%87.jpg" alt="ใบบัวหลวง" class="w-full h-40 object-cover rounded-md">
+                <h2 class="text-xl font-bold mt-3">ใบบัวหลวง</h2>
+                <p class="text-gray-600 mt-2">ลดความดันโลหิตบำรุงหัวใจ</p>
+                <a href="#" class="text-teal-500 mt-2 inline-block">อ่านเพิ่มเติม</a>
+            </div>
+
+            <!-- สมุนไพร 5 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <img src="https://cdn.pixabay.com/photo/2021/09/19/06/09/flower-6636981_1280.jpg" alt="ดอกอัญชัน" class="w-full h-40 object-cover rounded-md">
+                <h2 class="text-xl font-bold mt-3">ดอกอัญชัน</h2>
+                <p class="text-gray-600 mt-2">บำรุงสายตาช่วยลดความเครียด</p>
+                <a href="#" class="text-teal-500 mt-2 inline-block">อ่านเพิ่มเติม</a>
+            </div>
+
+            <!-- สมุนไพร 6 -->
+            <div class="bg-white rounded-lg shadow p-4">
+                <img src="https://medthai.com/wp-content/uploads/2013/09/%E0%B8%97%E0%B8%AD%E0%B8%87%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%87.jpg" alt="ทองพันชั่ง" class="w-full h-40 object-cover rounded-md">
+                <h2 class="text-xl font-bold mt-3">ทองพันชั่ง</h2>
+                <p class="text-gray-600 mt-2">รักษาโรคผิวหนังต้านเชื้อรา</p>
+                <a href="#" class="text-teal-500 mt-2 inline-block">อ่านเพิ่มเติม</a>
+            </div>
+        </div>
+    </div>
+    
+
+</body>
+</html>

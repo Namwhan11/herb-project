@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js" defer></script>
+    <title>แผงควบคุมผู้ดูแลระบบ - ระบบจัดการสารสนเทศสมุนไพรไทย</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun&display=swap');
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .bg-custom {
+            background-color: white;
+        }
+
+        .header-shadow {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #1e6363;
+        }
+
+        .btn-login {
+            background-color: #38b2ac;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #1e6363;
+        }
+
+        .text-custom {
+            color: #2d3748;
+        }
+
+        .bg-card {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body class="bg-custom min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-teal-500 text-white fixed top-0 left-0 right-0 z-50 p-5 shadow-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-3xl font-extrabold tracking-tight text-white">ระบบจัดการสารสนเทศสมุนไพรไทย</a>
+            <div class="flex space-x-6 text-lg">
+                <span>ยินดีต้อนรับ, ผู้ดูแลระบบ</span>
+                <a href="/logout" class="hover:text-teal-300 transition-colors">ออกจากระบบ</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white p-6 pt-24 shadow-xl transition-all ease-in-out">
+        <h4 class="text-center text-2xl font-semibold text-white mb-8">แผงควบคุมผู้ดูแลระบบ</h4>
+        <ul class="space-y-6 text-lg">
+            <li><a href="/herbal-products" class="hover:text-teal-300 transition-colors">จัดการข้อมูลสมุนไพร</a></li>
+            <li><a href="/admin/comments" class="hover:text-teal-300 transition-colors">ดูรายงานความคิดเห็น</a></li>
+            <li><a href="/admin/userReports" class="hover:text-teal-300 transition-colors">รายงานข้อมูลผู้ใช้</a></li>
+            <li><a href="/settings" class="hover:text-teal-300 transition-colors">การตั้งค่า</a></li>
+        </ul>
+    </div>
+
+    <!-- Content Area -->
+    <div class="ml-64 pt-24 px-10 pb-8">
+        <h2 class="text-4xl font-bold text-center text-custom mb-8">แดชบอร์ด</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-card rounded-lg shadow-xl p-6 transform transition-all hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">ข้อมูลสมุนไพร</h3>
+                <p class="text-gray-600">จัดการข้อมูลสมุนไพรของคุณที่นี่</p>
+                <a href="/herbal-products/add" class="mt-4 inline-block bg-teal-500 text-white px-5 py-3 rounded-md hover:bg-teal-600 transition-all">เพิ่มสมุนไพรใหม่</a>
+            </div>
+            <div class="bg-card rounded-lg shadow-xl p-6 transform transition-all hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">สถิติ</h3>
+                <p class="text-gray-600">ภาพรวมของสถิติระบบและรายงานต่าง ๆ</p>
+                <a href="/reports" class="mt-4 inline-block bg-teal-500 text-white px-5 py-3 rounded-md hover:bg-teal-600 transition-all">ดูรายงาน</a>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+
+</html>
